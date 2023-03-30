@@ -9,5 +9,4 @@ public class PostitApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PostitApplication.class, args);
 	}
-
 }

@@ -1,7 +1,6 @@
 package com.eetuekman.postit.services;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.eetuekman.postit.models.Note;
 import com.eetuekman.postit.repositories.NoteRepository;
+
 
 @Service
 public class NoteService {
@@ -24,8 +24,8 @@ public class NoteService {
     }
 
     @Transactional(readOnly = true)
-    public Optional<Note> getNote(long id) {
-        var note = repository.findById(id);
+    public Note getNote(long id) {
+        var note = repository.findById(id).get();
 
         return note;
     }
@@ -40,7 +40,7 @@ public class NoteService {
     @Transactional
     public Note updateNote(Note note) {
         var id = note.getId();
-        
+
         var savedNote = repository.findById(id).get();
         
         savedNote.setText(note.getText());

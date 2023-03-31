@@ -1,6 +1,7 @@
 package com.eetuekman.postit.controllers;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ public class NoteController {
     @Autowired
     private NoteService service;
 
+    // GET: api/note
+
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<Note> getNotes() {
@@ -47,29 +50,29 @@ public class NoteController {
         return notes;
     }
 
+    // GET: api/note/{id}
+
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Note getNote(@PathVariable("id") Long id) {
-        Optional<Note> note;
+        Note note;
 
         try {
             note = service.getNote(id);
-
-            if (note.isPresent() == false) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND); 
-            }
-
-            return note.get();
         }
-        catch (ResponseStatusException rse) {
+        catch(NoSuchElementException nsee) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         catch(Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
+
+        return note;
     }
 
-    @PostMapping(value = "")
+    // POST: api/note
+
+    @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Note saveNote(@RequestBody SaveNoteRequest body) {
         if(body.getText().length() > 200) {
@@ -92,7 +95,9 @@ public class NoteController {
         return savedNote;
     }
 
-    @PutMapping(value = "")
+    // PUT: api/note
+
+    @PutMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Note updateNote(@RequestBody UpdateNoteRequest body) {
         if(body.getText().length() > 200) {
@@ -109,6 +114,9 @@ public class NoteController {
         try {
             updatedNote = service.updateNote(note);
         }
+        catch(NoSuchElementException nsee) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
         catch(Exception e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
@@ -116,7 +124,9 @@ public class NoteController {
         return updatedNote;
     }
 
-    @DeleteMapping(value = "/{id}")
+    // DELETE: api/note
+
+    @DeleteMapping(value = "/{id}", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> deleteNote(@PathVariable("id") Long id) {
         try {
             service.deleteNote(id);

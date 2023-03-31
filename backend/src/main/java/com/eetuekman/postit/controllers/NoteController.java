@@ -2,7 +2,6 @@ package com.eetuekman.postit.controllers;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +33,6 @@ public class NoteController {
     private NoteService service;
 
     // GET: api/note
-
     @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public List<Note> getNotes() {
@@ -51,7 +49,6 @@ public class NoteController {
     }
 
     // GET: api/note/{id}
-
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Note getNote(@PathVariable("id") Long id) {
@@ -71,7 +68,6 @@ public class NoteController {
     }
 
     // POST: api/note
-
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Note saveNote(@RequestBody SaveNoteRequest body) {
@@ -96,7 +92,6 @@ public class NoteController {
     }
 
     // PUT: api/note
-
     @PutMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Note updateNote(@RequestBody UpdateNoteRequest body) {
@@ -125,7 +120,6 @@ public class NoteController {
     }
 
     // DELETE: api/note
-
     @DeleteMapping(value = "/{id}", produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> deleteNote(@PathVariable("id") Long id) {
         try {

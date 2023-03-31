@@ -38,7 +38,9 @@ public class NoteService {
     }
 
     @Transactional
-    public Note updateNote(Note note, Long id) {
+    public Note updateNote(Note note) {
+        var id = note.getId();
+        
         var savedNote = repository.findById(id).get();
         
         savedNote.setText(note.getText());

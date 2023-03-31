@@ -1,6 +1,6 @@
 package com.eetuekman.postit.models;
 
-public class NoteRequest {
+public class UpdateNoteRequest {
     private Long id;
     private String text;
 

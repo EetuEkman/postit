@@ -1,5 +1,11 @@
 package com.eetuekman.postit.controllers;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,38 +17,114 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
-import com.eetuekman.postit.models.NoteRequest;
+import com.eetuekman.postit.models.UpdateNoteRequest;
+import com.eetuekman.postit.services.NoteService;
+import com.eetuekman.postit.models.Note;
+import com.eetuekman.postit.models.SaveNoteRequest;
 
 @RestController
 @RequestMapping("api/note")
 @CrossOrigin()
 public class NoteController {
 
-    @GetMapping(value = "")
+    @Autowired
+    private NoteService service;
+
+    @GetMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String getNotes() {
-        return "";
+    public List<Note> getNotes() {
+        List<Note> notes;
+
+        try {
+            notes = service.getNotes();
+        }
+        catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+
+        return notes;
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public String getNotes(@PathVariable("id") Long id) {
-        return "";
+    public Note getNote(@PathVariable("id") Long id) {
+        Optional<Note> note;
+
+        try {
+            note = service.getNote(id);
+
+            if (note.isPresent() == false) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND); 
+            }
+
+            return note.get();
+        }
+        catch (ResponseStatusException rse) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
     }
 
     @PostMapping(value = "")
-    public ResponseEntity<String> saveNote(@RequestBody NoteRequest body) {
-        return ResponseEntity.ok("Saved.");
+    @ResponseBody
+    public Note saveNote(@RequestBody SaveNoteRequest body) {
+        if(body.getText().length() > 200) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Text too long.");
+        }
+
+        var newNote = new Note();
+
+        newNote.setText(body.getText());
+
+        Note savedNote;
+        
+        try {
+            savedNote = service.saveNote(newNote);
+        }
+        catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+
+        return savedNote;
     }
 
     @PutMapping(value = "")
-    public ResponseEntity<String> updateNote(@RequestBody NoteRequest body) {
-        return ResponseEntity.ok("Updated.");
+    @ResponseBody
+    public Note updateNote(@RequestBody UpdateNoteRequest body) {
+        if(body.getText().length() > 200) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Text too long.");
+        }
+
+        var note = new Note();
+
+        note.setId(body.getId());
+        note.setText(body.getText());
+
+        Note updatedNote;
+
+        try {
+            updatedNote = service.updateNote(note);
+        }
+        catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+
+        return updatedNote;
     }
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> deleteNote(@PathVariable("id") Long id) {
+        try {
+            service.deleteNote(id);
+        }
+        catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+
         return ResponseEntity.ok("Deleted.");
     }
 }

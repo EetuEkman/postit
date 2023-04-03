@@ -26,7 +26,6 @@ import { UpdateNoteComponent } from './pages/update-note/update-note/update-note
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

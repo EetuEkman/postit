@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import Note from '../models/Note';
 
 @Component({
   selector: 'app-note',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./note.component.css']
 })
 export class NoteComponent {
+  @Input() public note!: Note;
 
-}
+  onPointerdown() {
+    console.log("Redirect to edit page with id " + this.note.id.toString())
+  }
+};

@@ -1,0 +1,12 @@
+:host ::ng-deep {
+    width: 12em;
+    height: 12em;
+    padding: 0.25em;
+    background-color: #F6EB8B;
+}
+
+:host ::ng-deep textarea {
+    max-height: 100%;
+    display: block;
+    overflow-y: auto;
+}

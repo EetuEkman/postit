@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import Note from 'src/app/models/Note';
 import { NoteService } from 'src/app/services/note.service';
 
@@ -8,7 +8,7 @@ import { NoteService } from 'src/app/services/note.service';
   styleUrls: ['./view-notes.component.css'],
   providers: [NoteService]
 })
-export class ViewNotesComponent {
+export class ViewNotesComponent implements OnInit {
   notes: Note[] = [];
 
   constructor(private service: NoteService) {
@@ -17,6 +17,10 @@ export class ViewNotesComponent {
 
   getNotes() {
     this.service.getNotes()
-      .subscribe((fetchedNotes: Note[]) => this.notes = fetchedNotes);
+      .subscribe(fetchedNotes => this.notes = fetchedNotes);
+  }
+
+  ngOnInit(): void {
+    this.getNotes();
   }
 }

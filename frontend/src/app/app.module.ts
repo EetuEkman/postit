@@ -5,13 +5,15 @@ import { AppComponent } from './app.component';
 import { NotesComponent } from './notes/notes.component';
 import { NoteComponent } from './note/note.component';
 import { ViewNotesComponent } from './pages/view-notes/view-notes/view-notes.component';
+import { CreateNoteComponent } from './create-note/create-note.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NotesComponent,
     NoteComponent,
-    ViewNotesComponent
+    ViewNotesComponent,
+    CreateNoteComponent
   ],
   imports: [
     BrowserModule

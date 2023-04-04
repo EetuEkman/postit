@@ -69,7 +69,7 @@ export class UpdateNoteComponent implements OnInit {
             this.message = "Network error.";
             break;
           case 404:
-            this.message = "Not found."
+            this.router.navigate(["/404"], { replaceUrl: true });
             break;
           default:
             this.message = error.message;

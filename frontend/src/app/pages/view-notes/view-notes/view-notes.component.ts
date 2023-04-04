@@ -16,8 +16,11 @@ export class ViewNotesComponent implements OnInit {
   }
 
   getNotes() {
-    this.service.getNotes()
-      .subscribe(fetchedNotes => this.notes = fetchedNotes);
+    const observable = this.service.getNotes();
+
+    observable.subscribe(fetchedNotes => {
+      this.notes = fetchedNotes;
+    });
   }
 
   ngOnInit(): void {

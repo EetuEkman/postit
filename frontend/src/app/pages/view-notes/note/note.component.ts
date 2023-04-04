@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import Note from '../../../models/Note';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-note',
@@ -9,7 +10,11 @@ import Note from '../../../models/Note';
 export class NoteComponent {
   @Input() public note!: Note;
 
+  constructor(private router: Router) {
+
+  }
+
   onPointerdown() {
-    console.log("Redirect to edit page with id " + this.note.id.toString())
+    this.router.navigate(["/update", this.note.id])
   }
 };

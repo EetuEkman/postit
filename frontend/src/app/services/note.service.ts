@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import Note from '../models/Note';
@@ -8,7 +9,10 @@ import Note from '../models/Note';
 export class NoteService {
     url = "http://localhost:8080/api/note";
 
-    constructor(private http: HttpClient) {
+    constructor(
+        private http: HttpClient,
+        private router: Router
+    ) {
 
     }
 
@@ -23,8 +27,7 @@ export class NoteService {
     getNote(id: number): Observable<Note> {
         return this.http.get<Note>(this.url + "/" + id.toString())
             .pipe(
-                retry(1),
-                catchError(this.handleError)
+                retry(1)
             );
     }
 
@@ -53,11 +56,19 @@ export class NoteService {
     }
 
     private handleError(error: HttpErrorResponse) {
-        if (error.status === 0) {
-            console.error("An error occurred. " + error.error);
-        }
-        else {
-            console.error("An error occurred. " + error.error);
+        console.log("noteService: handleError: HttpErrorResponse: " + JSON.stringify(error, null, 2));
+
+        switch (error.status) {
+            case 0:
+                console.error("An error occurred. " + JSON.stringify(error.error));
+                break;
+            case 404:
+                console.error("Error 404 Not found." + JSON.stringify(error.error));
+
+                return throwError(() => new Error("Error 404 Not found."));
+            default:
+                console.error("An error occurred. " + JSON.stringify(error.error));
+                break;
         }
 
         return throwError(() => new Error("Something went wrong."));

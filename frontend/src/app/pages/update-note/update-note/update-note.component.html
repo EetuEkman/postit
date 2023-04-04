@@ -1,1 +1,11 @@
-<p>update-note works!</p>
+<main>
+    <div>
+        <textarea maxlength="200" [(ngModel)]="note.text"></textarea>
+    </div>
+    <div [className]="'buttons'">
+        <button (pointerdown)="toIndex()">Return</button>
+        <button (pointerdown)="updateNote()">Update</button>
+        <button (pointerdown)="deleteNote()">Delete</button>
+    </div>
+    <div>{{message}}</div>
+</main>

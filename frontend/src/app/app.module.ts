@@ -11,6 +11,7 @@ import { NoteComponent } from './pages/view-notes/note/note.component';
 import { ViewNotesComponent } from './pages/view-notes/view-notes/view-notes.component';
 import { CreateNoteComponent } from './pages/create-note/create-note/create-note.component';
 import { UpdateNoteComponent } from './pages/update-note/update-note/update-note.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { UpdateNoteComponent } from './pages/update-note/update-note/update-note
     NoteComponent,
     ViewNotesComponent,
     CreateNoteComponent,
-    UpdateNoteComponent
+    UpdateNoteComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

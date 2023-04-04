@@ -1,4 +1,4 @@
-:host ul {
+:host div {
     display: flex;
     justify-items: flex-start;
     align-items: flex-start;
@@ -10,7 +10,7 @@
 }
 
 @media (orientation: landscape) {
-    :host ul {
+    :host div {
         max-height: 100vh;
         overflow-x: auto;
         overflow-y: hidden;
@@ -18,7 +18,8 @@
 }
 
 @media (orientation: portrait) {
-    :host ul {
+    :host div {
+        max-width: 100vw;
         overflow-x: hidden;
         overflow-y: auto;
     }

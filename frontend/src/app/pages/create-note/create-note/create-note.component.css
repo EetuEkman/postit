@@ -1,0 +1,18 @@
+:host textarea {
+    width: 15em;
+    height: 15em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    resize: none;
+    font-size: 1.5em;
+    background-color: #F6EB8B;
+    border: 1px solid black;
+    border-radius: 0.125em;
+    padding: 1em;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+:host button {
+    margin: 0.5em 0.5em 0.5em 0;
+}

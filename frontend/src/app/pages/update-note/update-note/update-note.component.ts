@@ -40,15 +40,16 @@ export class UpdateNoteComponent implements OnInit {
 
     const observable = this.service.updateNote(this.note);
 
-    observable.subscribe(fetchedNote => this.note = fetchedNote);
-
-    this.message = "Updated.";
+    observable.subscribe(fetchedNote => {
+      this.note = fetchedNote;
+      this.router.navigate(["/"]);
+    });
   }
 
   async deleteNote() {
     const observable = this.service.deleteNote(this.note.id);
 
-    observable.subscribe(() => this.router.navigate(["/"], { replaceUrl: true }));
+    observable.subscribe(id => this.router.navigate(["/"], { replaceUrl: true }));
   }
 
   async getNote() {

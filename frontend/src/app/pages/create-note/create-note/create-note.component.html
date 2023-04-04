@@ -1,1 +1,9 @@
-<p>create-note works!</p>
+<main>
+    <div>
+        <textarea maxlength="200" [(ngModel)]="text"></textarea>
+    </div>
+    <div>
+        <button (pointerdown)="toIndex()">Return</button>
+        <button (pointerdown)="createNote()">Create</button>
+    </div>
+</main>

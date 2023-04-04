@@ -129,6 +129,6 @@ public class NoteController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
 
-        return ResponseEntity.ok("Deleted.");
+        return ResponseEntity.ok(id.toString());
     }
 }

@@ -31,8 +31,8 @@ export class NoteService {
             );
     }
 
-    createNote(note: Note): Observable<Note> {
-        return this.http.post<Note>(this.url, note)
+    createNote(text: string): Observable<Note> {
+        return this.http.post<Note>(this.url, { text: text })
             .pipe(
                 retry(1),
                 catchError(this.handleError)
@@ -47,8 +47,8 @@ export class NoteService {
             );
     }
 
-    deleteNote(id: number): Observable<Object> {
-        return this.http.delete(this.url + "/" + id.toString())
+    deleteNote(id: number) {
+        return this.http.delete(this.url + "/" + id.toString(), { responseType: "text" })
             .pipe(
                 retry(1),
                 catchError(this.handleError)

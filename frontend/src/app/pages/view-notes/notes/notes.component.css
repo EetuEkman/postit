@@ -1,0 +1,25 @@
+:host ul {
+    display: flex;
+    justify-items: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 1em;
+    list-style-type: none;
+    padding: 1em;
+}
+
+@media (orientation: landscape) {
+    :host ul {
+        max-height: 100vh;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+}
+
+@media (orientation: portrait) {
+    :host ul {
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+}

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import Note from 'src/app/models/Note';
 import { NoteService } from 'src/app/services/note.service';
 
@@ -11,8 +12,15 @@ import { NoteService } from 'src/app/services/note.service';
 export class ViewNotesComponent implements OnInit {
   notes: Note[] = [];
 
-  constructor(private service: NoteService) {
+  constructor(
+    private service: NoteService,
+    private router: Router
+  ) {
 
+  }
+
+  toCreate() {
+    this.router.navigate(["/create"]);
   }
 
   getNotes() {

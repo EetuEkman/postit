@@ -1,0 +1,19 @@
+:host main {
+    position: relative;
+}
+
+:host button {
+    width: 5em;
+    height: 5em;
+    border-radius: 50%;
+    position: fixed;
+    right: 2em;
+    bottom: 2em;
+    padding: 0.5em;
+    background: green;
+    color: #EEEEEE;
+    border: none;
+    outline: 1px solid #191919;
+    text-align: center;
+    font-size: 1.2em;
+}

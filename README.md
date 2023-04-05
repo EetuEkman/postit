@@ -8,7 +8,7 @@ Stack
 Requirements
 * [Powershell 7](https://github.com/PowerShell/PowerShell)
 * Latest node package manager
-* Java development kit (JDK), I used [Liberica JDK 17.0.6+10](https://bell-sw.com/pages/downloads/#/java-17-lts) as it was recommended in the [Spring Quickstart Guide](https://spring.io/quickstart)
+* Java development kit (JDK) 20, I used [Liberica JDK 20+37](https://bell-sw.com/pages/downloads/) as it was recommended in the [Spring Quickstart Guide](https://spring.io/quickstart)
 * [Docker](https://www.docker.com/)
 
 On Windows systems, use Unblock-File PowerShell cmdlet to allow the script to run.

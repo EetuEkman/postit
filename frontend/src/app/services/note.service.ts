@@ -1,20 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import Note from '../models/Note';
 
 @Injectable()
 export class NoteService {
-    url = "http://localhost:8080/api/note";
+    url = "http://localhost:5001/api/note";
 
-    constructor(
-        private http: HttpClient,
-        private router: Router
-    ) {
-
-    }
+    constructor(private http: HttpClient) {}
 
     getNotes(): Observable<Note[]> {
         return this.http.get<Note[]>(this.url)

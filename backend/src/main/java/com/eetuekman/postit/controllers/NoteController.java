@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,14 +22,18 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.eetuekman.postit.models.UpdateNoteRequest;
 import com.eetuekman.postit.services.NoteService;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.PositiveOrZero;
+
 import com.eetuekman.postit.models.Note;
 import com.eetuekman.postit.models.SaveNoteRequest;
 
 @RestController
 @RequestMapping("api/note")
 @CrossOrigin()
+@Validated
 public class NoteController {
-
     @Autowired
     private NoteService service;
 
@@ -51,7 +56,7 @@ public class NoteController {
     // GET: api/note/{id}
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Note getNote(@PathVariable("id") Long id) {
+    public Note getNote(@PositiveOrZero @PathVariable("id") Long id) {
         Note note;
 
         try {
@@ -70,11 +75,7 @@ public class NoteController {
     // POST: api/note
     @PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Note saveNote(@RequestBody SaveNoteRequest body) {
-        if(body.getText().length() > 200) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Text too long.");
-        }
-
+    public Note saveNote(@Valid @RequestBody SaveNoteRequest body) {
         var newNote = new Note();
 
         newNote.setText(body.getText());
@@ -94,11 +95,7 @@ public class NoteController {
     // PUT: api/note
     @PutMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Note updateNote(@RequestBody UpdateNoteRequest body) {
-        if(body.getText().length() > 200) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Text too long.");
-        }
-
+    public Note updateNote(@Valid @RequestBody UpdateNoteRequest body) {
         var note = new Note();
 
         note.setId(body.getId());
@@ -121,7 +118,7 @@ public class NoteController {
 
     // DELETE: api/note
     @DeleteMapping(value = "/{id}", produces = MediaType.TEXT_PLAIN_VALUE)
-    public ResponseEntity<String> deleteNote(@PathVariable("id") Long id) {
+    public ResponseEntity<String> deleteNote(@PositiveOrZero @PathVariable("id") Long id) {
         try {
             service.deleteNote(id);
         }

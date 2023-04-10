@@ -41,7 +41,7 @@ npm run-script ng build
 
 Copy-Item -Path (Join-Path $PSScriptRoot frontend dist *) `
     -Destination (Join-Path $PSScriptRoot backend src main resources static) `
-    -PassThru -Force
+    -PassThru -Force -Recurse
 
 Set-Location (Join-Path $PSScriptRoot backend)
 

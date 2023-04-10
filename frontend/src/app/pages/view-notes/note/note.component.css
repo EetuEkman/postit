@@ -1,16 +1,22 @@
 :host div {
     width: 12em;
     height: 12em;
+    padding: 0 0.75em;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    padding: 0.5em;
+    justify-content: center;
+    flex-wrap: wrap;
     margin: 0;
     background-color: #F6EB8B;
-    outline: 1px solid black;
-    font-size: 1.2em;
+    outline: 1px solid #191919;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     overflow-x: hidden;
     overflow-y: auto;
+    word-wrap: break-word;
+    border-radius: 0 0 0.125em 0.125em;
+}
+
+:host p {
+    font-family: "Hynings";
+    font-size: x-large;
 }

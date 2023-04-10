@@ -10,8 +10,22 @@ import { Router } from '@angular/router';
 export class NoteComponent {
   @Input() public note!: Note;
 
-  constructor(private router: Router) {
+  random: number;
 
+  // Randomly rotate note slightly
+
+  setStyle() {
+    let style = {
+      "transform": "rotate(" + this.random.toFixed(3) + "deg)"
+    }
+
+    return style;
+  }
+
+  constructor(private router: Router) {
+    // Random number between -0.25 0.25
+
+    this.random = ((Math.random() - 0.5) / 2);
   }
 
   onPointerdown() {

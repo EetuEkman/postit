@@ -1,10 +1,12 @@
 package com.eetuekman.postit.models;
 
-import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 
 public class UpdateNoteRequest {
-    @PositiveOrZero(message = "Id must be positive or zero.")
+    @Min(value = 0)
+    @Max(value = 2147483647)
     private Long id;
 
     @Size(min = 0, max = 200, message = "Text length must be between 0 and 200 characters.")

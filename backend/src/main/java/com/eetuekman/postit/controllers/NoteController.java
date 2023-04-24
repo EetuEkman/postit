@@ -24,6 +24,7 @@ import com.eetuekman.postit.models.UpdateNoteRequest;
 import com.eetuekman.postit.services.NoteService;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.PositiveOrZero;
 
 import com.eetuekman.postit.models.Note;
@@ -56,7 +57,7 @@ public class NoteController {
     // GET: api/note/{id}
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public Note getNote(@PositiveOrZero @PathVariable("id") Long id) {
+    public Note getNote(@PositiveOrZero @Max(value = 2147483647) @PathVariable("id") Long id) {
         Note note;
 
         try {

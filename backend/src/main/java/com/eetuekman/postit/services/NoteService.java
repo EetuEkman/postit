@@ -9,10 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.eetuekman.postit.models.Note;
 import com.eetuekman.postit.repositories.NoteRepository;
 
-
 @Service
 public class NoteService {
-
     @Autowired
     private NoteRepository repository;
 

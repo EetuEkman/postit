@@ -3,6 +3,7 @@ package com.eetuekman.postit.repositories;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -10,7 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import com.eetuekman.postit.models.Note;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = Replace.NONE)
+@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2, replace = Replace.NONE)
 public class NoteRepositoryTest {
     @Autowired
     private NoteRepository repository;
@@ -57,7 +58,7 @@ public class NoteRepositoryTest {
     }
 
     @Test
-    public void noteRepository_get_returnsNote() {
+    public void noteRepository_findById_returnsNote() {
         // Arrange
 
         var newNote = new Note();

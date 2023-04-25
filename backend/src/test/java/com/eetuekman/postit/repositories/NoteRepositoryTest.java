@@ -1,5 +1,7 @@
 package com.eetuekman.postit.repositories;
 
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +55,7 @@ public class NoteRepositoryTest {
         var updatedNote = repository.save(savedNote);
 
         // Assert
-        
+
         Assertions.assertTrue(savedNote.getId() == updatedNote.getId());
         Assertions.assertTrue(savedNote.getText().equals(updatedNote.getText()));
     }
@@ -107,5 +109,40 @@ public class NoteRepositoryTest {
         fetchedNote = repository.findById(note.getId());
 
         Assertions.assertFalse(fetchedNote.isPresent());
+    }
+
+    @Test
+    public void noteRepository_findAll_returnsNotes() {
+        // Arrange
+
+        var notes = new ArrayList<Note>();
+
+        var note = new Note();
+
+        note.setText("Jogurtti");
+
+        notes.add(note);
+        
+        note = new Note();
+
+        note.setText("Margariini");
+
+        notes.add(note);
+
+        repository.saveAll(notes);
+
+        // Act
+
+        var savedNotes = repository.findAll();
+
+        // Assert
+
+        Assertions.assertEquals(notes.size(), savedNotes.size());
+
+        Assertions.assertTrue(savedNotes.get(0).getId() >= 0);
+        Assertions.assertTrue(savedNotes.get(0).getText().equals(notes.get(0).getText()));
+
+        Assertions.assertTrue(savedNotes.get(1).getId() >= 0);
+        Assertions.assertTrue(savedNotes.get(1).getText().equals(notes.get(1).getText()));
     }
 }

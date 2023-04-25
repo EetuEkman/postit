@@ -137,6 +137,7 @@ public class NoteRepositoryTest {
 
         // Assert
 
+        Assertions.assertTrue(savedNotes.size() > 0);
         Assertions.assertEquals(notes.size(), savedNotes.size());
 
         Assertions.assertTrue(savedNotes.get(0).getId() >= 0);

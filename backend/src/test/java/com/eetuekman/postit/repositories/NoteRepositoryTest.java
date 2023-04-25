@@ -22,7 +22,9 @@ public class NoteRepositoryTest {
         
         var newNote = new Note();
 
-        newNote.setText("Mämmi");
+        var text = "Mämmi";
+
+        newNote.setText(text);
 
         // Act
 
@@ -30,8 +32,8 @@ public class NoteRepositoryTest {
 
         // Assert
 
-        Assertions.assertNotNull(savedNote);
         Assertions.assertTrue(savedNote.getId() >= 0);
+        Assertions.assertTrue(savedNote.getText().equals(text));
     }
 
     @Test
@@ -51,8 +53,7 @@ public class NoteRepositoryTest {
         var updatedNote = repository.save(savedNote);
 
         // Assert
-
-        Assertions.assertNotNull(updatedNote);
+        
         Assertions.assertTrue(savedNote.getId() == updatedNote.getId());
         Assertions.assertTrue(savedNote.getText().equals(updatedNote.getText()));
     }
@@ -69,12 +70,42 @@ public class NoteRepositoryTest {
 
         // Act
 
-        var note = repository.findById(savedNote.getId()).get();
+        var fetchedNote = repository.findById(savedNote.getId());
 
         // Assert
 
-        Assertions.assertNotNull(note);
+        Assertions.assertTrue(fetchedNote.isPresent());
+
+        var note = fetchedNote.get();
+
         Assertions.assertTrue(savedNote.getId() == note.getId());
         Assertions.assertTrue(savedNote.getText().equals(note.getText()));
+    }
+
+    @Test
+    public void noteRepository_delete_deletesNote() {
+        // Arrange
+
+        var newNote = new Note();
+
+        newNote.setText("Jauheliha");
+
+        var savedNote = repository.save(newNote);
+
+        var fetchedNote = repository.findById(savedNote.getId());
+
+        Assertions.assertTrue(fetchedNote.isPresent());
+
+        var note = fetchedNote.get();
+
+        // Act
+
+        repository.delete(note);
+
+        // Assert
+
+        fetchedNote = repository.findById(note.getId());
+
+        Assertions.assertFalse(fetchedNote.isPresent());
     }
 }

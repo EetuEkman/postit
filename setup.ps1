@@ -1,3 +1,5 @@
+#Requires -Version 7
+
 $env:DOCKER_SCAN_SUGGEST="false"
 
 docker pull postgres
